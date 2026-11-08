@@ -1,0 +1,299 @@
+/* ==========================================================================
+   base.css — 重置、排版基线、页面底色与纸纹、无障碍、动效降级、打印
+   只使用 tokens.css 中的变量。
+   ========================================================================== */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+* {
+  margin: 0;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  background-color: var(--bg);
+  scroll-padding-top: calc(var(--header-h) + var(--space-5));
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+body {
+  min-height: 100vh;
+  min-height: 100dvh;
+  font-family: var(--font-sans);
+  font-size: 1rem;
+  line-height: 1.8;
+  letter-spacing: 0.01em;
+  color: var(--ink);
+  background-color: var(--bg);
+  /* 「夜色纸纹」：暖光 + 纸纤维 + 双色织纹 + 四边压暗，全部为 CSS 渐变，无外部资源 */
+  background-image:
+    radial-gradient(120% 76% at 50% -14%, var(--tex-warm), transparent 58%),
+    radial-gradient(140% 110% at 50% 112%, var(--tex-vignette), transparent 64%),
+    repeating-linear-gradient(102deg, var(--tex-hi) 0 1px, transparent 1px 7px),
+    repeating-linear-gradient(14deg, var(--tex-lo) 0 1px, transparent 1px 9px);
+  background-repeat: no-repeat, no-repeat, repeat, repeat;
+  background-attachment: scroll;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  /* clip 而不是 hidden：不建立滚动容器，避免破坏吸顶头部 */
+  overflow-x: clip;
+}
+
+/* ---- 排版基线 ------------------------------------------------------- */
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-serif);
+  font-weight: 600;
+  line-height: 1.42;
+  letter-spacing: 0.06em;
+  color: var(--ink);
+  text-wrap: balance;
+}
+
+h1 {
+  font-size: clamp(1.625rem, 1.25rem + 1.6vw, 2.25rem);
+  letter-spacing: 0.1em;
+}
+
+h2 {
+  font-size: clamp(1.3rem, 1.1rem + 0.9vw, 1.625rem);
+}
+
+h3 {
+  font-size: 1.125rem;
+}
+
+h4 {
+  font-size: 1rem;
+}
+
+p {
+  line-height: 1.9;
+  text-wrap: pretty;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+  transition: color var(--dur-1) var(--ease), border-color var(--dur-1) var(--ease);
+}
+
+a:hover {
+  color: var(--gold-soft);
+}
+
+strong,
+b {
+  font-weight: 600;
+  color: var(--gold-soft);
+}
+
+em,
+i {
+  font-style: normal;
+}
+
+small {
+  font-size: 0.8125rem;
+}
+
+ul,
+ol {
+  padding: 0;
+  list-style: none;
+}
+
+hr {
+  border: 0;
+}
+
+img,
+svg,
+video {
+  display: block;
+  max-width: 100%;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+  letter-spacing: inherit;
+  color: inherit;
+  accent-color: var(--gold);
+}
+
+button {
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+input[type="date"],
+input[type="time"] {
+  color-scheme: dark;
+}
+
+[hidden] {
+  display: none;
+}
+
+::placeholder {
+  color: var(--ink-faint);
+  opacity: 1;
+}
+
+/* ---- 选区 / 焦点 ----------------------------------------------------- */
+
+::selection {
+  color: var(--ink);
+  background-color: var(--verm-40);
+}
+
+:focus-visible {
+  outline: 2px solid var(--gold-soft);
+  outline-offset: 2px;
+  border-radius: var(--radius-s);
+}
+
+:focus:not(:focus-visible) {
+  outline: none;
+}
+
+/* ---- 滚动条 ---------------------------------------------------------- */
+
+html {
+  scrollbar-width: thin;
+  scrollbar-color: var(--gold-26) transparent;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background-color: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  border: 2px solid var(--bg);
+  border-radius: var(--radius-pill);
+  background-color: var(--gold-26);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: var(--gold-40);
+}
+
+/* ---- 动效降级：全局只保留淡入 -------------------------------------- */
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --dur-1: 1ms;
+    --dur-2: 1ms;
+    --dur-3: 1ms;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 1ms;
+    animation-iteration-count: 1;
+    transition-duration: 1ms;
+    scroll-behavior: auto;
+  }
+}
+
+/* ---- 打印：转为可读的浅色古籍排印 ----------------------------------
+   调色板在 tokens.css 的 @media print 中覆盖；这里只做结构处理。 */
+
+@media print {
+  *,
+  *::before,
+  *::after {
+    /* 阴影/渐变是我们表达爻线与铜钱的主要手段，打印时强制保留底色 */
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  html,
+  body {
+    background-color: var(--bg);
+    background-image: none;
+    color: var(--ink);
+  }
+
+  .app-header,
+  .site-nav,
+  .skip-link,
+  .toast-root,
+  .modal,
+  .btn,
+  .app-footer__meta {
+    display: none;
+  }
+
+  .app-main {
+    max-width: none;
+    padding: 0;
+  }
+
+  .view.is-active {
+    animation: none;
+  }
+
+  .card,
+  .modal__dialog,
+  .quote,
+  .empty {
+    break-inside: avoid;
+    box-shadow: none;
+  }
+
+  .card {
+    background-image: none;
+  }
+
+  .hex__bar,
+  .coin__face,
+  .coin__glyph,
+  .btn {
+    box-shadow: none;
+  }
+
+  .hex__line[data-moving="1"] .hex__bar,
+  .hex__line[data-moving="1"] .hex__mark {
+    animation: none;
+    opacity: 1;
+  }
+
+  a {
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
+  }
+}

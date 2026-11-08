@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="zh-CN" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="dark">
+<title>易 · 六十四卦 —— 金钱卦在线起卦</title>
+<meta name="description" content="以三枚铜钱起卦，得本卦与变卦，查看卦辞、爻辞、译文与解析。另附六十四卦全库、六十甲子纳音查询。纯静态网页，可离线使用。">
+<meta name="theme-color" content="#0d0f12">
+<meta property="og:title" content="易 · 六十四卦 —— 金钱卦在线起卦">
+<meta property="og:description" content="三枚铜钱，六次摇卦，得本卦与变卦。附六十四卦全库与六十甲子纳音。">
+<meta property="og:type" content="website">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="css/tokens.css">
+<link rel="stylesheet" href="css/base.css">
+<link rel="stylesheet" href="css/components.css">
+<link rel="stylesheet" href="css/layout.css">
+<link rel="stylesheet" href="css/views/divination.css">
+<link rel="stylesheet" href="css/views/library.css">
+<link rel="stylesheet" href="css/views/nayin.css">
+<link rel="stylesheet" href="css/views/basics.css">
+</head>
+<body>
+<a class="skip-link" href="#main">跳到主内容</a>
+
+<header class="app-header">
+  <div class="app-header__inner">
+    <a class="brand" href="#/divination">
+      <span class="brand__seal" aria-hidden="true">易</span>
+      <span class="brand__text">
+        <strong>六十四卦</strong>
+        <em>BOOK OF CHANGES</em>
+      </span>
+    </a>
+    <nav class="site-nav" aria-label="主导航">
+      <a class="nav-link" href="#/divination" data-route="divination">摇卦</a>
+      <a class="nav-link" href="#/library" data-route="library">六十四卦</a>
+      <a class="nav-link" href="#/nayin" data-route="nayin">纳音</a>
+      <a class="nav-link" href="#/basics" data-route="basics">基础</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main" class="app-main" tabindex="-1"></main>
+
+<noscript>
+  <style>
+    .noscript {
+      max-width: 640px;
+      margin: 48px auto;
+      padding: 24px;
+      border: 1px solid rgba(201, 168, 106, 0.34);
+      border-radius: 10px;
+      background: #14181e;
+      color: #e8e3d8;
+      font-family: system-ui, -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif;
+      line-height: 1.9;
+    }
+    .noscript p { margin: 0 0 8px; }
+    .noscript p:last-child { margin-bottom: 0; color: #b9b2a4; font-size: 14px; }
+  </style>
+  <div class="noscript">
+    <p><strong>需要开启 JavaScript</strong></p>
+    <p>本页的起卦、六十四卦与纳音查询均由浏览器端脚本完成，请启用 JavaScript 后刷新。</p>
+  </div>
+</noscript>
+
+<footer class="app-footer">
+  <div class="app-footer__inner">
+    <p class="app-footer__note">
+      内容整理自《周易》六十四卦与六十甲子纳音，仅供传统文化研究与娱乐参考，请勿据以决断重大事务。
+    </p>
+    <p class="app-footer__meta">
+      <span>零依赖 · 纯静态 · 离线可用</span>
+      <span aria-hidden="true">·</span>
+      <a href="#/basics">起卦方法</a>
+      <span aria-hidden="true">·</span>
+      <a href="#/library">六十四卦</a>
+    </p>
+  </div>
+</footer>
+
+<div id="toast-root" class="toast-root" aria-live="polite" aria-atomic="true"></div>
+
+<script src="js/data/hexagrams.js"></script>
+<script src="js/data/nayin.js"></script>
+<script src="js/core/ganzhi.js"></script>
+<script src="js/core/engine.js"></script>
+<script src="js/views/divination.js"></script>
+<script src="js/views/library.js"></script>
+<script src="js/views/nayin.js"></script>
+<script src="js/views/basics.js"></script>
+<!-- app.js 最后加载：此时所有视图已注册；视图对 BAGUA_UI 采用延迟解析，不依赖加载顺序 -->
+<script src="js/app.js"></script>
+</body>
+</html>

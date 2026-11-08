@@ -1,0 +1,259 @@
+/* ==========================================================================
+   views/basics.css — 基础知识页
+   ========================================================================== */
+
+.basics-view {
+  padding-bottom: var(--space-8);
+}
+
+.basics__hero {
+  padding: var(--space-7) 0 var(--space-6);
+  max-width: 760px;
+}
+
+.basics__title {
+  margin: var(--space-3) 0 0;
+  font-family: var(--font-serif);
+  font-size: clamp(2rem, 4.6vw, 3rem);
+  font-weight: 500;
+  line-height: 1.2;
+  letter-spacing: 0.14em;
+  color: var(--ink);
+}
+
+.basics__lede {
+  margin: var(--space-4) 0 0;
+  color: var(--ink-dim);
+  font-size: 0.97rem;
+  line-height: 2;
+}
+
+.basics__grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-5);
+  align-items: start;
+}
+
+.basics__card--wide {
+  grid-column: 1 / -1;
+}
+
+/* ---------------- 阴阳 ---------------- */
+.basics__yinyang {
+  display: grid;
+  gap: var(--space-4);
+}
+
+.basics__yin-row {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-4);
+  padding: var(--space-4);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-m);
+  background: var(--gold-02);
+}
+
+.basics__glyph {
+  flex: 0 0 auto;
+  min-width: 3.4em;
+  font-family: var(--font-serif);
+  font-size: 1.9rem;
+  line-height: 1;
+  letter-spacing: 0.12em;
+  text-align: center;
+  color: var(--gold-soft);
+  padding-top: 2px;
+}
+
+.basics__yin-row[data-kind="yin"] .basics__glyph {
+  color: var(--ink-dim);
+}
+
+.basics__yin-title {
+  display: block;
+  font-family: var(--font-serif);
+  font-size: 1rem;
+  letter-spacing: 0.16em;
+  color: var(--ink);
+  margin-bottom: var(--space-1);
+}
+
+.basics__yin-text p {
+  margin: 0;
+  line-height: 1.9;
+}
+
+.basics__quote {
+  margin: var(--space-5) 0 0;
+  padding-left: var(--space-4);
+  border-left: 2px solid var(--gold-deep);
+  font-family: var(--font-serif);
+  font-size: 1rem;
+  line-height: 2;
+  color: var(--ink);
+  letter-spacing: 0.04em;
+}
+
+/* ---------------- 步骤 / 正文 ---------------- */
+.basics__para {
+  margin: 0 0 var(--space-4);
+  color: var(--ink-dim);
+  line-height: 2;
+  font-size: 0.94rem;
+}
+
+.basics__steps {
+  margin: 0 0 var(--space-4);
+  padding-left: 1.2em;
+  display: grid;
+  gap: var(--space-2);
+  color: var(--ink-dim);
+  font-size: 0.92rem;
+  line-height: 1.95;
+}
+
+.basics__steps li::marker {
+  color: var(--gold-deep);
+}
+
+.basics__note {
+  margin: var(--space-4) 0 0;
+  padding: var(--space-3) var(--space-4);
+  border-left: 2px solid var(--verm-40);
+  background: var(--verm-06);
+  border-radius: 0 var(--radius-s) var(--radius-s) 0;
+  font-size: 0.86rem;
+  line-height: 1.9;
+  color: var(--ink-dim);
+}
+
+.basics__demo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-4);
+  text-align: center;
+  padding: var(--space-5) var(--space-4);
+  border: 1px dashed var(--line-strong);
+  border-radius: var(--radius-m);
+}
+
+.basics__demo p {
+  margin: 0;
+}
+
+/* ---------------- 八卦表 ---------------- */
+.basics__trigrams {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: var(--space-3);
+}
+
+.basics__trigram {
+  display: flex;
+  gap: var(--space-3);
+  padding: var(--space-3);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-m);
+  background: var(--gold-02);
+  transition: border-color var(--dur-2) var(--ease), background var(--dur-2) var(--ease);
+}
+
+.basics__trigram:hover {
+  border-color: var(--line-strong);
+  background: var(--gold-04);
+}
+
+.basics__trigram-sym {
+  font-size: 1.7rem;
+  line-height: 1;
+  color: var(--gold);
+}
+
+.basics__trigram-text {
+  display: grid;
+  gap: 1px;
+  min-width: 0;
+}
+
+.basics__trigram-name {
+  font-family: var(--font-serif);
+  font-size: 1rem;
+  letter-spacing: 0.1em;
+  color: var(--ink);
+}
+
+.basics__trigram-py {
+  font-size: 0.68rem;
+  letter-spacing: 0.08em;
+  color: var(--ink-faint);
+}
+
+.basics__trigram-img {
+  font-size: 0.74rem;
+  color: var(--ink-dim);
+}
+
+.basics__trigram-virtue {
+  font-size: 0.72rem;
+  color: var(--ink-faint);
+}
+
+/* ---------------- 金钱卦对照 ---------------- */
+.basics__coinmap {
+  display: grid;
+  border-top: 1px solid var(--line);
+  margin-top: var(--space-3);
+}
+
+.basics__coinrow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+  padding: var(--space-3) var(--space-1);
+  border-bottom: 1px solid var(--line);
+  font-size: 0.9rem;
+  color: var(--ink-dim);
+}
+
+.basics__coinval {
+  font-family: var(--font-serif);
+  letter-spacing: 0.1em;
+  color: var(--gold-soft);
+}
+
+/* ---------------- 页脚 ---------------- */
+.basics__foot {
+  margin-top: var(--space-6);
+  padding-top: var(--space-4);
+  border-top: 1px solid var(--line);
+  line-height: 1.9;
+}
+
+/* ---------------- 响应式 ---------------- */
+@media (max-width: 1023px) {
+  .basics__trigrams {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 767px) {
+  .basics__grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .basics__card--wide {
+    grid-column: auto;
+  }
+
+  .basics__trigrams {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .basics__hero {
+    padding: var(--space-6) 0 var(--space-5);
+  }
+}

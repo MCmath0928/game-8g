@@ -1,0 +1,447 @@
+/* ==========================================================================
+   layout.css — 外壳布局（header / brand / nav / main / footer / view）
+   响应式断点：360 / 375 / 768 / 1440
+   ========================================================================== */
+
+body {
+  display: flex;
+  flex-direction: column;
+}
+
+/* ==========================================================================
+   1. 吸顶头部
+   ========================================================================== */
+
+.app-header {
+  position: sticky;
+  top: 0;
+  z-index: var(--z-header);
+  flex: 0 0 auto;
+  background-color: var(--bg-veil);
+  border-bottom: 1px solid var(--line);
+  box-shadow: 0 1px 0 var(--gold-04);
+}
+
+@supports (backdrop-filter: blur(4px)) {
+  .app-header {
+    backdrop-filter: blur(12px) saturate(120%);
+    -webkit-backdrop-filter: blur(12px) saturate(120%);
+  }
+}
+
+/* 头部底边的一道极淡金光，像卷轴的天头 */
+.app-header::after {
+  content: "";
+  position: absolute;
+  right: 0;
+  bottom: -1px;
+  left: 0;
+  height: 1px;
+  background-image: linear-gradient(90deg, transparent, var(--gold-26), transparent);
+  pointer-events: none;
+}
+
+.app-header__inner {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  width: 100%;
+  max-width: var(--maxw);
+  min-height: var(--header-h);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+/* ---- 品牌 ----------------------------------------------------------- */
+
+.brand {
+  display: inline-flex;
+  flex: 0 0 auto;
+  align-items: center;
+  gap: var(--space-3);
+  color: var(--ink);
+}
+
+.brand:hover {
+  color: var(--ink);
+}
+
+/* 朱砂印章 */
+.brand__seal {
+  display: grid;
+  place-items: center;
+  width: 38px;
+  height: 38px;
+  color: var(--verm-soft);
+  font-family: var(--font-kai);
+  font-size: 1.3125rem;
+  line-height: 1;
+  background-image: linear-gradient(155deg, var(--verm-16), transparent 62%);
+  border: 1px solid var(--verm-40);
+  border-radius: 3px;
+  box-shadow: inset 0 0 0 1px var(--verm-06);
+  transition:
+    border-color var(--dur-2) var(--ease),
+    box-shadow var(--dur-2) var(--ease),
+    background-color var(--dur-2) var(--ease);
+}
+
+.brand:hover .brand__seal {
+  border-color: var(--verm);
+  box-shadow:
+    inset 0 0 0 1px var(--verm-06),
+    0 0 14px -4px var(--glow-verm);
+}
+
+.brand__text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  line-height: 1;
+}
+
+.brand__text strong {
+  color: var(--ink);
+  font-family: var(--font-serif);
+  font-size: 1.0625rem;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  line-height: 1.25;
+  white-space: nowrap;
+}
+
+.brand__text em {
+  color: var(--ink-faint);
+  font-family: var(--font-sans);
+  font-size: 0.5625rem;
+  font-style: normal;
+  letter-spacing: 0.3em;
+  line-height: 1.4;
+  white-space: nowrap;
+}
+
+/* ---- 主导航 --------------------------------------------------------- */
+
+.site-nav {
+  display: flex;
+  flex: 1 1 auto;
+  align-items: center;
+  justify-content: flex-end;
+  gap: var(--space-1);
+  min-width: 0;
+}
+
+.nav-link {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 36px;
+  padding: 0 var(--space-3);
+  color: var(--ink-dim);
+  font-size: 0.875rem;
+  letter-spacing: 0.16em;
+  white-space: nowrap;
+  border-radius: var(--radius-s);
+  transition:
+    color var(--dur-1) var(--ease),
+    background-color var(--dur-1) var(--ease);
+}
+
+.nav-link::after {
+  content: "";
+  position: absolute;
+  right: var(--space-3);
+  bottom: 5px;
+  left: var(--space-3);
+  height: 1px;
+  background-color: var(--gold);
+  transform: scaleX(0);
+  transform-origin: center;
+  transition:
+    transform var(--dur-2) var(--ease),
+    opacity var(--dur-2) var(--ease);
+  opacity: 0.9;
+}
+
+.nav-link:hover {
+  color: var(--ink);
+  background-color: var(--gold-04);
+}
+
+.nav-link:hover::after {
+  transform: scaleX(0.55);
+  opacity: 0.45;
+}
+
+.nav-link.is-active,
+.nav-link[aria-current="page"] {
+  color: var(--gold-soft);
+  background-image: linear-gradient(180deg, var(--gold-08), transparent 82%);
+  text-shadow: 0 0 14px var(--gold-26);
+}
+
+.nav-link.is-active::after,
+.nav-link[aria-current="page"]::after {
+  transform: scaleX(1);
+  opacity: 1;
+  box-shadow: 0 0 10px var(--glow-gold);
+}
+
+.nav-link.is-active:hover,
+.nav-link[aria-current="page"]:hover {
+  color: var(--gold-soft);
+}
+
+/* ==========================================================================
+   2. 主内容
+   ========================================================================== */
+
+.app-main {
+  flex: 1 0 auto;
+  width: 100%;
+  max-width: var(--maxw);
+  margin-inline: auto;
+  padding: var(--space-6) var(--gutter) var(--space-8);
+}
+
+.view {
+  min-width: 0;
+}
+
+.view[hidden] {
+  display: none;
+}
+
+/* 页面切换：淡入 + 轻微上移 */
+.view.is-active {
+  animation: view-in var(--dur-3) var(--ease) both;
+}
+
+@keyframes view-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    /* 必须是 none：transform 会生成 fixed 后代的 containing block，
+       导致 .view 内打开的 .modal 相对 section 定位而跑到视口外 */
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .view.is-active {
+    animation: view-fade 240ms var(--ease) both;
+  }
+
+  @keyframes view-fade {
+    from {
+      opacity: 0;
+    }
+
+    to {
+      opacity: 1;
+    }
+  }
+}
+
+/* ==========================================================================
+   3. 页脚
+   ========================================================================== */
+
+.app-footer {
+  flex: 0 0 auto;
+  background-image: linear-gradient(180deg, transparent, var(--bg-soft));
+  border-top: 1px solid var(--line);
+}
+
+.app-footer__inner {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  width: 100%;
+  max-width: var(--maxw);
+  margin-inline: auto;
+  padding: var(--space-6) var(--gutter);
+}
+
+.app-footer__note {
+  max-width: 62ch;
+  color: var(--ink-faint);
+  font-size: 0.8125rem;
+  letter-spacing: 0.04em;
+  line-height: 1.9;
+}
+
+.app-footer__meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2);
+  color: var(--ink-faint);
+  font-size: 0.75rem;
+  letter-spacing: 0.12em;
+  line-height: 1.8;
+}
+
+.app-footer__meta a {
+  color: var(--ink-dim);
+  border-bottom: 1px solid transparent;
+  transition:
+    color var(--dur-1) var(--ease),
+    border-color var(--dur-1) var(--ease);
+}
+
+.app-footer__meta a:hover {
+  color: var(--gold-soft);
+  border-bottom-color: var(--line-strong);
+}
+
+/* ==========================================================================
+   4. 响应式
+   ========================================================================== */
+
+/* ---- ≤ 768px：平板与手机横屏 ---------------------------------------- */
+
+@media (max-width: 767px) {
+  .app-header__inner {
+    gap: var(--space-3);
+  }
+
+  .brand__text em {
+    display: none;
+  }
+
+  .brand__seal {
+    width: 34px;
+    height: 34px;
+    font-size: 1.1875rem;
+  }
+
+  .brand__text strong {
+    font-size: 1rem;
+    letter-spacing: 0.16em;
+  }
+
+  .nav-link {
+    min-height: 34px;
+    padding: 0 var(--space-2);
+    font-size: 0.8125rem;
+    letter-spacing: 0.1em;
+  }
+
+  .nav-link::after {
+    right: var(--space-2);
+    left: var(--space-2);
+  }
+
+  .app-main {
+    padding-top: var(--space-5);
+    padding-bottom: var(--space-7);
+  }
+
+  .app-footer__inner {
+    padding-block: var(--space-5);
+  }
+}
+
+/* ---- ≤ 479px：手机竖屏（375 / 390） -------------------------------- */
+
+@media (max-width: 479px) {
+  .app-header__inner {
+    gap: var(--space-2);
+  }
+
+  .brand {
+    gap: var(--space-2);
+  }
+
+  .brand__seal {
+    width: 32px;
+    height: 32px;
+    font-size: 1.125rem;
+  }
+
+  .brand__text strong {
+    font-size: 0.9375rem;
+    letter-spacing: 0.12em;
+  }
+
+  .nav-link {
+    padding: 0 7px;
+    font-size: 0.8125rem;
+    letter-spacing: 0.06em;
+  }
+
+  .nav-link::after {
+    right: 7px;
+    left: 7px;
+  }
+
+  .app-main {
+    padding-top: var(--space-4);
+    padding-bottom: var(--space-7);
+  }
+
+  .app-footer__note {
+    font-size: 0.75rem;
+  }
+}
+
+/* ---- ≤ 375px：小屏收窄 --------------------------------------------- */
+
+@media (max-width: 389px) {
+  .brand__text strong {
+    font-size: 0.875rem;
+    letter-spacing: 0.08em;
+  }
+
+  .nav-link {
+    padding: 0 5px;
+    letter-spacing: 0.02em;
+  }
+
+  .nav-link::after {
+    right: 5px;
+    left: 5px;
+  }
+}
+
+/* ---- ≤ 344px：极限窄屏，只留印章 ----------------------------------- */
+
+@media (max-width: 344px) {
+  .brand__text {
+    display: none;
+  }
+
+  .nav-link {
+    font-size: 0.75rem;
+  }
+}
+
+/* ---- ≥ 1440px：宽屏留白更从容 ------------------------------------- */
+
+@media (min-width: 1440px) {
+  :root {
+    --header-h: 72px;
+    --gutter: 40px;
+  }
+
+  .app-main {
+    padding-top: var(--space-7);
+    padding-bottom: var(--space-8);
+  }
+
+  .nav-link {
+    padding: 0 var(--space-4);
+    letter-spacing: 0.2em;
+  }
+
+  .nav-link::after {
+    right: var(--space-4);
+    left: var(--space-4);
+  }
+}

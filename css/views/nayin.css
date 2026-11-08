@@ -1,0 +1,645 @@
+/* =============================================================
+ * nayin.css — 纳音页专属样式（仅作用于 #view-nayin）
+ * 颜色、间距、字体一律取 css/tokens.css 变量；五行元素色由令牌
+ * 混合派生（color-mix），未新增硬编码色值。
+ * ============================================================= */
+
+#view-nayin [hidden] {
+  display: none !important;
+}
+
+#view-nayin {
+  --ny-metal: var(--gold);
+  --ny-wood: var(--jade);
+  --ny-water: var(--jade);
+  --ny-water: color-mix(in srgb, var(--jade) 45%, var(--ink-dim));
+  --ny-fire: var(--verm);
+  --ny-earth: var(--gold-deep);
+  --ny-earth: color-mix(in srgb, var(--gold) 65%, var(--ink-faint));
+  --ny-el: var(--gold);
+}
+
+#view-nayin [data-element="metal"] { --ny-el: var(--ny-metal); }
+#view-nayin [data-element="wood"] { --ny-el: var(--ny-wood); }
+#view-nayin [data-element="water"] { --ny-el: var(--ny-water); }
+#view-nayin [data-element="fire"] { --ny-el: var(--ny-fire); }
+#view-nayin [data-element="earth"] { --ny-el: var(--ny-earth); }
+
+/* ---------------- 页面骨架 ---------------- */
+#view-nayin .nayin {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+}
+
+#view-nayin .nayin__head {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  padding-top: var(--space-2);
+}
+
+#view-nayin .nayin__title {
+  margin: 0;
+  font-family: var(--font-serif);
+  font-size: clamp(26px, 4.4vw, 38px);
+  font-weight: 500;
+  line-height: 1.25;
+  letter-spacing: 0.08em;
+  color: var(--ink);
+}
+
+#view-nayin .nayin__lead {
+  margin: 0;
+  max-width: 62ch;
+  font-size: 14px;
+  line-height: 1.9;
+  color: var(--ink-dim);
+}
+
+/* ---------------- 表单 ---------------- */
+#view-nayin .nayin__form {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: var(--space-4) var(--space-4);
+}
+
+#view-nayin .nayin__form-actions {
+  grid-column: 1 / -1;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  align-items: center;
+}
+
+#view-nayin .nayin__form-note {
+  margin: var(--space-3) 0 0;
+  font-size: 12px;
+  line-height: 1.8;
+  color: var(--ink-faint);
+  overflow-wrap: anywhere;
+}
+
+/* ---------------- 结果区 ---------------- */
+#view-nayin .nayin__result {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  padding: var(--space-5);
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-l);
+  box-shadow: var(--shadow-1);
+}
+
+#view-nayin .nayin__result-head {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+#view-nayin .nayin__result-title {
+  margin: 0;
+  font-family: var(--font-serif);
+  font-size: clamp(18px, 2.6vw, 22px);
+  font-weight: 500;
+  line-height: 1.4;
+  letter-spacing: 0.04em;
+  color: var(--ink);
+}
+
+#view-nayin .nayin__result-title:focus {
+  outline: none;
+}
+
+#view-nayin .nayin__result-title:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+#view-nayin .nayin__meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  align-items: center;
+}
+
+/* ---------------- 四柱卡片 ---------------- */
+#view-nayin .nayin__pillars {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: var(--space-3);
+}
+
+#view-nayin .nayin__pillars--3 {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+#view-nayin .nayin__pillar {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-1);
+  padding: var(--space-4) var(--space-3) var(--space-3);
+  background: var(--bg-elev);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-m);
+  text-align: center;
+}
+
+#view-nayin .nayin__pillar::before {
+  content: "";
+  position: absolute;
+  top: -1px;
+  left: var(--space-4);
+  right: var(--space-4);
+  height: 2px;
+  border-radius: 2px;
+  background: var(--ny-el);
+  opacity: 0.6;
+}
+
+#view-nayin .nayin__pillar-name {
+  margin: 0;
+  font-size: 12px;
+  letter-spacing: 0.24em;
+  color: var(--ink-faint);
+}
+
+#view-nayin .nayin__gz {
+  display: flex;
+  gap: 0.04em;
+  margin: var(--space-1) 0;
+  font-family: var(--font-serif);
+  font-size: clamp(28px, 5vw, 40px);
+  font-weight: 500;
+  line-height: 1.15;
+  letter-spacing: 0.02em;
+  color: var(--ink);
+}
+
+#view-nayin .nayin__gan {
+  color: var(--ink);
+}
+
+#view-nayin .nayin__zhi {
+  color: var(--ny-el);
+}
+
+#view-nayin .nayin__pillar-nayin {
+  margin: 0;
+  font-family: var(--font-serif);
+  font-size: 15px;
+  letter-spacing: 0.12em;
+  color: var(--ny-el);
+}
+
+#view-nayin .nayin__pillar-note {
+  margin: 0;
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  color: var(--ink-faint);
+}
+
+/* ---------------- 提示与警示 ---------------- */
+#view-nayin .nayin__hint {
+  margin: 0;
+  padding-left: var(--space-3);
+  border-left: 2px solid var(--line-strong);
+  font-size: 13px;
+  line-height: 1.85;
+  color: var(--ink-faint);
+}
+
+#view-nayin .nayin__warnings {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+#view-nayin .nayin__warning {
+  display: flex;
+  gap: var(--space-2);
+  align-items: flex-start;
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.8;
+  color: var(--ink-dim);
+}
+
+#view-nayin .nayin__warning .badge {
+  flex: none;
+  margin-top: 0.15em;
+}
+
+#view-nayin .nayin__warning-text {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+/* 页内通用卡片钩子（表单卡、检索卡） */
+#view-nayin .nayin__card {
+  min-width: 0;
+}
+
+/* ---------------- 格局详情卡 ---------------- */
+#view-nayin .nayin__detail {
+  border-color: var(--line-strong);
+  border-color: color-mix(in srgb, var(--ny-el) 42%, transparent);
+}
+
+#view-nayin .nayin__judgement {
+  margin: 0 0 var(--space-4);
+  padding: var(--space-3) var(--space-4);
+  border-left: 2px solid var(--ny-el);
+  border-radius: 0 var(--radius-s) var(--radius-s) 0;
+  background: var(--bg-soft);
+  background: linear-gradient(90deg, color-mix(in srgb, var(--ny-el) 12%, transparent), transparent 78%);
+  font-family: var(--font-serif);
+  font-size: 14px;
+  line-height: 1.95;
+  color: var(--ink);
+}
+
+#view-nayin .nayin__fields {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0;
+}
+
+#view-nayin .nayin__field {
+  display: grid;
+  grid-template-columns: 3.6em minmax(0, 1fr);
+  gap: var(--space-3);
+  align-items: start;
+  padding: var(--space-2) 0;
+  border-bottom: 1px dashed var(--line);
+}
+
+#view-nayin .nayin__field:last-child {
+  border-bottom: 0;
+}
+
+/* 组件 .analysis + .analysis 的间距由网格统一处理 */
+#view-nayin .nayin__fields .nayin__field {
+  margin-top: 0;
+}
+
+#view-nayin .nayin__field .analysis__k {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: 12px;
+  letter-spacing: 0.16em;
+  line-height: 1.8;
+  color: var(--ink-dim);
+  white-space: nowrap;
+}
+
+#view-nayin .nayin__field .analysis__k::before {
+  content: "";
+  flex: none;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--ny-el);
+}
+
+#view-nayin .nayin__field-v {
+  min-width: 0;
+  font-size: 13.5px;
+  line-height: 1.85;
+  color: var(--ink-dim);
+  overflow-wrap: anywhere;
+}
+
+#view-nayin .nayin__profile-full-judge {
+  margin: 0 0 var(--space-2);
+  font-family: var(--font-serif);
+  font-size: 13px;
+  line-height: 1.9;
+  color: var(--ink);
+}
+
+/* ---------------- 排版口径说明 ---------------- */
+#view-nayin .nayin__explain {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  padding-top: var(--space-4);
+  border-top: 1px solid var(--line);
+}
+
+#view-nayin .nayin__explain-title {
+  margin: 0;
+  font-size: 12px;
+  letter-spacing: 0.22em;
+  color: var(--ink-faint);
+}
+
+#view-nayin .nayin__explain-list {
+  display: grid;
+  gap: var(--space-2);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-size: 13px;
+  line-height: 1.85;
+  color: var(--ink-dim);
+}
+
+#view-nayin .nayin__explain-list li {
+  position: relative;
+  padding-left: var(--space-4);
+}
+
+#view-nayin .nayin__explain-list li::before {
+  content: "·";
+  position: absolute;
+  left: 2px;
+  color: var(--gold-deep);
+}
+
+#view-nayin .nayin__explain-list strong {
+  font-weight: 600;
+  color: var(--ink);
+}
+
+/* ---------------- 六十甲子检索 ---------------- */
+#view-nayin .nayin__lookup-bar {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: var(--space-3);
+  align-items: end;
+}
+
+#view-nayin .nayin__lookup-actions {
+  display: flex;
+  gap: var(--space-2);
+  padding-bottom: 2px;
+}
+
+#view-nayin .nayin__lookup-result {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  margin-top: var(--space-4);
+}
+
+#view-nayin .nayin__lookup-head {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+#view-nayin .nayin__lookup-name {
+  margin: 0;
+  font-family: var(--font-serif);
+  font-size: 20px;
+  letter-spacing: 0.1em;
+  color: var(--ink);
+}
+
+#view-nayin .nayin__lookup-sub {
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.7;
+  color: var(--ink-faint);
+}
+
+/* ---------------- 三十纳音格局浏览 ---------------- */
+#view-nayin .nayin__profiles {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  padding-top: var(--space-2);
+}
+
+#view-nayin .nayin__section-head {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+#view-nayin .nayin__section-title {
+  margin: 0;
+  font-family: var(--font-serif);
+  font-size: clamp(20px, 3vw, 26px);
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  color: var(--ink);
+}
+
+#view-nayin .nayin__section-lead {
+  margin: 0;
+  max-width: 66ch;
+  font-size: 13.5px;
+  line-height: 1.9;
+  color: var(--ink-dim);
+}
+
+#view-nayin .nayin__groups {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+}
+
+#view-nayin .nayin__group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+#view-nayin .nayin__group-title {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin: 0;
+  font-family: var(--font-serif);
+  font-size: 18px;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  color: var(--ink);
+}
+
+#view-nayin .nayin__group-title::before {
+  content: "";
+  flex: none;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--ny-el);
+  opacity: 0.9;
+  box-shadow: 0 0 0 3px var(--panel);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--ny-el) 18%, transparent);
+}
+
+#view-nayin .nayin__group-title::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: var(--line);
+}
+
+#view-nayin .nayin__profile-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr));
+  gap: var(--space-3);
+}
+
+#view-nayin .nayin__profile-card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  padding: var(--space-4);
+  background: var(--bg-elev);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-m);
+  transition: border-color var(--dur-2) var(--ease), background-color var(--dur-2) var(--ease);
+}
+
+#view-nayin .nayin__profile-card:hover,
+#view-nayin .nayin__profile-card:focus-within,
+#view-nayin .nayin__profile-card.is-open {
+  border-color: var(--line-strong);
+  border-color: color-mix(in srgb, var(--ny-el) 45%, transparent);
+  background: var(--panel-2);
+}
+
+#view-nayin .nayin__profile-jz {
+  margin: 0;
+  font-size: 12px;
+  letter-spacing: 0.16em;
+  color: var(--ink-faint);
+}
+
+#view-nayin .nayin__profile-name {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin: 0;
+  font-family: var(--font-serif);
+  font-size: 19px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  color: var(--ink);
+}
+
+#view-nayin .nayin__profile-name::before {
+  content: "";
+  flex: none;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--ny-el);
+}
+
+#view-nayin .nayin__profile-judge {
+  flex: 1 1 auto;
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.8;
+  color: var(--ink-dim);
+}
+
+#view-nayin .nayin__more {
+  align-self: flex-start;
+  margin-top: auto;
+}
+
+#view-nayin .nayin__more:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 2px;
+}
+
+#view-nayin .nayin__profile-full {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  margin-top: var(--space-1);
+  padding-top: var(--space-3);
+  border-top: 1px solid var(--line);
+}
+
+#view-nayin .nayin__fields--card .nayin__field {
+  grid-template-columns: 3.3em minmax(0, 1fr);
+}
+
+/* ---------------- 免责声明 ---------------- */
+#view-nayin .nayin__disclaim {
+  margin: 0;
+  padding-top: var(--space-4);
+  border-top: 1px dashed var(--line);
+  font-size: 12px;
+  line-height: 1.8;
+  color: var(--ink-faint);
+}
+
+/* ---------------- 响应式 ---------------- */
+@media (max-width: 860px) {
+  #view-nayin .nayin__pillars {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  #view-nayin .nayin__pillars--3 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 700px) {
+  #view-nayin .nayin {
+    gap: var(--space-4);
+  }
+
+  #view-nayin .nayin__form {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  #view-nayin .nayin__result {
+    padding: var(--space-4);
+  }
+
+  #view-nayin .nayin__lookup-bar {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  #view-nayin .nayin__lookup-actions {
+    justify-content: flex-start;
+  }
+
+  #view-nayin .nayin__field {
+    grid-template-columns: 3.4em minmax(0, 1fr);
+    gap: var(--space-2);
+  }
+}
+
+@media (max-width: 420px) {
+  #view-nayin .nayin__pillars {
+    gap: var(--space-2);
+  }
+
+  #view-nayin .nayin__pillar {
+    padding: var(--space-3) var(--space-2);
+  }
+
+  #view-nayin .nayin__gz {
+    font-size: clamp(26px, 8.2vw, 32px);
+  }
+
+  #view-nayin .nayin__profile-card {
+    padding: var(--space-3);
+  }
+}
+
+/* ---------------- 降低动效偏好 ---------------- */
+@media (prefers-reduced-motion: reduce) {
+  #view-nayin *,
+  #view-nayin *::before,
+  #view-nayin *::after {
+    transition-duration: 1ms !important;
+    animation-duration: 1ms !important;
+    animation-iteration-count: 1 !important;
+  }
+}

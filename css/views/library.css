@@ -1,0 +1,691 @@
+/* ==========================================================================
+   library.css — 六十四卦页（只在 #view-library 作用域内生效）
+   依赖 tokens.css 的变量与 components.css 的通用组件。
+   ========================================================================== */
+
+/* ==========================================================================
+   1. 页面骨架
+   ========================================================================== */
+
+#view-library .lib {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+  min-width: 0;
+}
+
+/* 外壳 .app-main 已提供上下留白，这里只负责页内节奏 */
+
+/* 由本页控制的显示/隐藏（覆盖 .lib__card / .lib__grid / .empty 的 display） */
+#view-library [hidden] {
+  display: none !important;
+}
+
+/* ==========================================================================
+   2. 标题区
+   ========================================================================== */
+
+#view-library .lib__head {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  padding-block: var(--space-2);
+}
+
+#view-library .lib__head-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: var(--space-2) var(--space-5);
+}
+
+#view-library .lib__title {
+  color: var(--ink);
+  font-size: clamp(2rem, 1.35rem + 2.6vw, 3rem);
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  line-height: 1.2;
+}
+
+#view-library .lib__stat {
+  display: inline-flex;
+  align-items: baseline;
+  gap: var(--space-1);
+  color: var(--ink-faint);
+  font-size: 0.8125rem;
+  letter-spacing: 0.16em;
+  line-height: 1.4;
+}
+
+#view-library .lib__stat-num {
+  color: var(--gold-soft);
+  font-family: var(--font-serif);
+  font-size: 1.625rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+}
+
+#view-library .lib__lede {
+  max-width: 62ch;
+  font-size: 0.9375rem;
+  line-height: 1.95;
+  letter-spacing: 0.02em;
+}
+
+/* ==========================================================================
+   3. 工具栏：检索 + 上/下卦筛选 + 结果计数
+   ========================================================================== */
+
+#view-library .lib__toolbar {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  padding: var(--space-4) var(--space-4) var(--space-3);
+  background-image: linear-gradient(180deg, var(--panel-2), var(--panel));
+  border: 1px solid var(--line);
+  border-radius: var(--radius-m);
+  box-shadow: var(--shadow-1);
+}
+
+#view-library .lib__toolbar-top {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: var(--space-3) var(--space-4);
+}
+
+#view-library .lib__field {
+  flex: 1 1 320px;
+  max-width: 100%;
+}
+
+#view-library .lib__field .field__hint {
+  letter-spacing: 0.02em;
+}
+
+#view-library .lib__reset {
+  flex: 0 0 auto;
+  margin-bottom: 1px;
+}
+
+#view-library .lib__filters {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  padding-top: var(--space-1);
+}
+
+#view-library .lib__filter {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  min-width: 0;
+}
+
+#view-library .lib__filter-label {
+  color: var(--ink-faint);
+  font-size: 0.75rem;
+  letter-spacing: 0.2em;
+}
+
+#view-library .lib__segmented {
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+  gap: 2px;
+}
+
+#view-library .lib__segment {
+  flex: 0 0 auto;
+  gap: var(--space-1);
+  padding: 0 var(--space-3);
+  font-size: 0.8125rem;
+  letter-spacing: 0.06em;
+}
+
+#view-library .lib__seg-sym {
+  color: var(--gold);
+  font-size: 0.9375rem;
+  line-height: 1;
+  letter-spacing: 0;
+}
+
+#view-library .lib__segment.is-active .lib__seg-sym,
+#view-library .lib__segment[aria-pressed="true"] .lib__seg-sym {
+  color: var(--gold-soft);
+}
+
+#view-library .lib__meta-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-2) var(--space-4);
+  padding-top: var(--space-3);
+  border-top: 1px solid var(--line);
+}
+
+#view-library .lib__count {
+  color: var(--gold-soft);
+  font-family: var(--font-serif);
+  font-size: 0.9375rem;
+  letter-spacing: 0.14em;
+}
+
+#view-library .lib__hint {
+  letter-spacing: 0.04em;
+}
+
+/* ==========================================================================
+   4. 卦卡网格
+   ========================================================================== */
+
+#view-library .lib__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+  gap: var(--space-3);
+  align-items: stretch;
+}
+
+#view-library .lib__card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-2);
+  min-width: 0;
+  height: 100%;
+  padding: var(--space-3) var(--space-3) var(--space-4);
+  color: var(--ink);
+  text-align: center;
+  background-color: var(--panel);
+  background-image: linear-gradient(180deg, var(--panel-2), var(--panel));
+  border: 1px solid var(--line);
+  border-radius: var(--radius-m);
+  box-shadow: var(--shadow-1);
+  transition:
+    transform var(--dur-2) var(--ease),
+    border-color var(--dur-1) var(--ease),
+    box-shadow var(--dur-2) var(--ease),
+    background-color var(--dur-2) var(--ease);
+}
+
+/* 悬停时的一道极淡金光，与 .card 的纸边反光同一语汇 */
+#view-library .lib__card::after {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto;
+  height: 1px;
+  background-image: linear-gradient(90deg, transparent, var(--gold-26), transparent);
+  border-radius: var(--radius-m) var(--radius-m) 0 0;
+  opacity: 0;
+  transition: opacity var(--dur-2) var(--ease);
+  pointer-events: none;
+}
+
+#view-library .lib__card:hover,
+#view-library .lib__card:focus-visible {
+  border-color: var(--line-strong);
+  background-image: linear-gradient(180deg, var(--panel-2), var(--bg-elev));
+  box-shadow: var(--shadow-2);
+}
+
+#view-library .lib__card:hover {
+  transform: translateY(-2px);
+}
+
+#view-library .lib__card:hover::after,
+#view-library .lib__card:focus-visible::after {
+  opacity: 1;
+}
+
+#view-library .lib__card:focus-visible {
+  outline: 2px solid var(--gold-soft);
+  outline-offset: 2px;
+}
+
+#view-library .lib__card-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2);
+  width: 100%;
+}
+
+#view-library .lib__num {
+  color: var(--gold);
+  font-family: var(--font-serif);
+  font-size: 0.8125rem;
+  letter-spacing: 0.16em;
+  line-height: 1.2;
+}
+
+#view-library .lib__card-tris {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  color: var(--ink-faint);
+  font-size: 0.6875rem;
+  line-height: 1.2;
+  letter-spacing: 0.02em;
+}
+
+#view-library .lib__card-tri {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 1px;
+  white-space: nowrap;
+}
+
+#view-library .lib__card-tri-k {
+  color: var(--ink-faint);
+}
+
+#view-library .lib__card-tri-sym {
+  color: var(--gold);
+  font-size: 0.8125rem;
+  line-height: 1;
+  letter-spacing: 0;
+}
+
+#view-library .lib__card-hex {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  padding-block: var(--space-2) var(--space-1);
+}
+
+#view-library .lib__card-hex .hex {
+  margin-inline: auto;
+}
+
+#view-library .lib__card-name {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: center;
+  gap: var(--space-1) var(--space-2);
+  min-width: 0;
+}
+
+#view-library .lib__name {
+  color: var(--ink);
+  font-size: 1.375rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  line-height: 1.3;
+}
+
+#view-library .lib__card-pinyin {
+  color: var(--ink-faint);
+  font-size: 0.75rem;
+  letter-spacing: 0.02em;
+}
+
+#view-library .lib__card-full {
+  color: var(--ink-dim);
+  font-size: 0.8125rem;
+  letter-spacing: 0.14em;
+  line-height: 1.5;
+}
+
+#view-library .lib__card-mean {
+  display: -webkit-box;
+  margin-top: auto;
+  overflow: hidden;
+  color: var(--ink-faint);
+  font-size: 0.75rem;
+  line-height: 1.75;
+  letter-spacing: 0.01em;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  text-wrap: pretty;
+}
+
+/* ==========================================================================
+   5. 空结果
+   ========================================================================== */
+
+#view-library .lib__empty {
+  margin-top: var(--space-2);
+}
+
+#view-library .lib__empty .btn {
+  margin-top: var(--space-3);
+}
+
+/* ==========================================================================
+   6. 详情模态（复用 .modal，只做本页布局）
+   ========================================================================== */
+
+.lib__modal .modal__dialog {
+  width: min(900px, 100%);
+}
+
+.lib__modal .lib__modal-heading {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  gap: var(--space-1);
+  min-width: 0;
+  padding-right: var(--space-7);
+}
+
+.lib__modal .lib__modal-num {
+  font-size: 0.6875rem;
+  letter-spacing: 0.26em;
+}
+
+.lib__modal .lib__modal-title {
+  padding-right: 0;
+  font-size: clamp(1.375rem, 1.2rem + 0.7vw, 1.75rem);
+}
+
+.lib__modal .lib__modal-sub {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: var(--space-2);
+  color: var(--ink-faint);
+  font-size: 0.8125rem;
+  letter-spacing: 0.1em;
+}
+
+.lib__modal .lib__modal-pinyin {
+  color: var(--gold);
+  letter-spacing: 0.04em;
+}
+
+.lib__modal .lib__modal-dot {
+  color: var(--line-strong);
+}
+
+.lib__modal .lib__detail {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--space-5);
+  min-width: 0;
+}
+
+/* 宽度足够时才分两栏：大卦象（lg 184px + 爻题 + 动爻位）需要约 267px，
+   左栏留 300px 才不会让 .hex 溢出。 */
+@media (min-width: 880px) {
+  .lib__modal .lib__detail {
+    grid-template-columns: minmax(240px, 300px) minmax(0, 1fr);
+    gap: var(--space-6);
+  }
+}
+
+/* ---- 左栏：大卦象 + 上下卦 ---- */
+
+.lib__modal .lib__detail-side {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  min-width: 0;
+}
+
+.lib__modal .lib__bighex {
+  display: flex;
+  justify-content: center;
+  padding: var(--space-4) var(--space-2);
+  background-image: radial-gradient(120% 90% at 50% 0%, var(--gold-06), transparent 68%);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-m);
+}
+
+.lib__modal .lib__bighex .hex {
+  margin-inline: auto;
+}
+
+.lib__modal .lib__trigrams {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--space-2);
+}
+
+.lib__modal .lib__tri {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-width: 0;
+  padding: var(--space-2) var(--space-3);
+  background-color: var(--gold-02);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-s);
+}
+
+.lib__modal .lib__tri-sym {
+  flex: 0 0 auto;
+  color: var(--gold);
+  font-size: 1.625rem;
+  line-height: 1;
+  letter-spacing: 0;
+}
+
+.lib__modal .lib__tri-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.lib__modal .lib__tri-role {
+  color: var(--ink-faint);
+  font-size: 0.625rem;
+  letter-spacing: 0.2em;
+  line-height: 1.4;
+}
+
+.lib__modal .lib__tri-name {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: var(--space-1);
+}
+
+.lib__modal .lib__tri-char {
+  color: var(--gold-soft);
+  font-size: 1.0625rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  line-height: 1.3;
+}
+
+.lib__modal .lib__tri-meta {
+  font-size: 0.6875rem;
+  line-height: 1.5;
+  letter-spacing: 0.01em;
+}
+
+/* ---- 右栏：卦辞与六爻 ---- */
+
+.lib__modal .lib__detail-main {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+  min-width: 0;
+}
+
+.lib__modal .lib__block {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  min-width: 0;
+}
+
+.lib__modal .lib__block + .lib__block {
+  padding-top: var(--space-5);
+  border-top: 1px solid var(--line);
+}
+
+.lib__modal .lib__sec-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: var(--space-2) var(--space-3);
+}
+
+.lib__modal .lib__sec-title {
+  position: relative;
+  padding-left: var(--space-3);
+  color: var(--ink);
+  font-size: 1.0625rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  line-height: 1.6;
+}
+
+.lib__modal .lib__sec-title::before {
+  content: "";
+  position: absolute;
+  top: 0.42em;
+  bottom: 0.42em;
+  left: 0;
+  width: 2px;
+  background-color: var(--verm);
+  border-radius: 1px;
+}
+
+.lib__modal .lib__sec-sub {
+  color: var(--ink-faint);
+  letter-spacing: 0.08em;
+}
+
+.lib__modal .lib__quote {
+  margin-block: var(--space-1);
+  text-wrap: pretty;
+}
+
+.lib__modal .lib__analysis {
+  display: grid;
+  grid-template-columns: 4em minmax(0, 1fr);
+  column-gap: var(--space-2);
+  align-items: start;
+  margin-top: 0;
+}
+
+.lib__modal .lib__analysis .lib__analysis-k {
+  margin-right: 0;
+}
+
+.lib__modal .lib__analysis-text {
+  min-width: 0;
+}
+
+.lib__modal .lib__lines {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.lib__modal .lib__line {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  padding: var(--space-3);
+  background-color: var(--gold-02);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-s);
+}
+
+.lib__modal .lib__line-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: var(--space-2) var(--space-3);
+}
+
+.lib__modal .lib__line-label {
+  flex: 0 0 auto;
+  color: var(--gold-soft);
+}
+
+.lib__modal .lib__line-text {
+  flex: 1 1 200px;
+  color: var(--ink);
+  font-size: 1rem;
+  line-height: 1.85;
+  letter-spacing: 0.06em;
+}
+
+.lib__modal .lib__line .analysis {
+  font-size: 0.875rem;
+  line-height: 1.9;
+}
+
+.lib__modal .lib__line--yong {
+  border-color: var(--line-strong);
+  background-image: linear-gradient(180deg, var(--gold-06), transparent 72%);
+}
+
+.lib__modal .lib__line--yong .lib__line-label {
+  color: var(--gold-soft);
+  border-color: var(--line-strong);
+  background-color: var(--gold-08);
+}
+
+.lib__modal .lib__note {
+  padding-top: var(--space-3);
+  border-top: 1px dashed var(--line);
+  line-height: 1.8;
+}
+
+/* ==========================================================================
+   7. 响应式
+   ========================================================================== */
+
+@media (max-width: 767px) {
+  #view-library .lib {
+    gap: var(--space-5);
+  }
+
+  #view-library .lib__segmented {
+    border-radius: var(--radius-m);
+  }
+
+  #view-library .lib__grid {
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: var(--space-2);
+  }
+
+  #view-library .lib__card {
+    padding: var(--space-3);
+  }
+
+  #view-library .lib__name {
+    font-size: 1.25rem;
+  }
+
+  .lib__modal .lib__modal-heading {
+    padding-right: var(--space-6);
+  }
+}
+
+@media (max-width: 419px) {
+  #view-library .lib__grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  #view-library .lib__toolbar {
+    padding-inline: var(--space-3);
+  }
+
+  #view-library .lib__segmented {
+    border-radius: var(--radius-m);
+  }
+}
+
+/* ==========================================================================
+   8. 动效降级
+   ========================================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  #view-library .lib__card:hover {
+    transform: none;
+  }
+
+  #view-library .lib__card::after {
+    transition: none;
+  }
+}
